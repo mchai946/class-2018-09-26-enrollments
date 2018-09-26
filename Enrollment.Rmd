@@ -2,17 +2,23 @@
 title: "Enrollments"
 author: "Maddie Chai"
 date: "9/26/2018"
-output: html_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(knitr)
 ```
 
-```{r}
+```{r, echo=FALSE}
 enrollment <- read_rds("enrollment.rds") %>%
-  select(course_name, u_grad)
+  filter(!is.na(course_name)) %>%
+  select(course_name, course_title, course_department, u_grad) %>%
+  arrange(desc(u_grad)) %>%
+  slice(1:10)
+  
+enrollment %>%kable(caption = "Highest Enrollments")
 
 ```
 
